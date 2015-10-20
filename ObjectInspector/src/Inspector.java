@@ -99,7 +99,7 @@ public class Inspector {
 		}
 	}
 	
-	public String parseFieldModifiers(Field field){
+	public String parseFieldModifiers(Field field){ 
 		
 		return Modifier.toString(field.getModifiers());
 	}
