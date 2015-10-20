@@ -55,14 +55,14 @@ public class Inspector {
 		 */
 		//inspect all of the above before inspecting fields
 		
+		System.out.println("Immediate superclass: " + objectClass.getSuperclass().toString() + "\n"); //TODO: verify this is correct
+		
 		inpectInterfaces(objectClass);
-		
 		inspectMethods(objectClass);
-		
 		inspectConstructors(objectClass);
-		
 		inspectFields(obj, objectClass, objectsToInspect);
 		
+			//if we want recursive inspection, inspect objects
 		if (recursive && objectsToInspect.size() > 0)
 			inspectFieldRecursive(obj, objectClass, objectsToInspect);
 	}
@@ -71,9 +71,11 @@ public class Inspector {
 	public void inspectFields(Object obj, Class ObjectClass, Vector objectsToInspect){
 
 		System.out.println("---- Inspecting Declared Fields ---");
-
+		if (ObjectClass.getDeclaredFields().length == 0)
+			System.out.println("No fields to inspect");
+		
 			//if there is at least one field to inspect
-		if (ObjectClass.getDeclaredFields().length >= 1){
+		else if (ObjectClass.getDeclaredFields().length >= 1){
 			
 			//System.out.println("Inspecting " + ObjectClass.getName());
 			
@@ -97,7 +99,8 @@ public class Inspector {
 				System.out.println("Type: " + field.getType().toString());
 					//Modifiers
 				System.out.println("Modifiers: " + Modifier.toString(field.getModifiers()));
-					//Current value TODO: make it work for recursive
+				
+														//Current value TODO: make it work for recursive
 					//For primitive fields, print current value
 				if (field.getType().isPrimitive())
 					System.out.println("Current value: " + field.get(obj));
@@ -193,12 +196,10 @@ public class Inspector {
 
 			System.out.println("");
 		}
-		
 	}
 	
 	public void inpectInterfaces(Class objectClass){
-		//getInterface
-		
+
 		System.out.println("---- Inspecting Implemented Interfaces ----");
 		
 		Class[] interfaces = objectClass.getInterfaces();
@@ -209,8 +210,7 @@ public class Inspector {
 		}
 	}
 	
-	
-	//TODO
+	//TODO check if method works correctly
 	public void inspectFieldRecursive(Object obj, Class ObjectClass, Vector objectsToInspect){
 		
 		if (objectsToInspect.size() > 0)
