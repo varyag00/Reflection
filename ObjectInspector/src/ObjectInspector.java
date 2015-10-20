@@ -40,8 +40,15 @@ public class ObjectInspector
 	   
     }
     //-----------------------------------------------------------
-    private void inspectFieldClasses(Object obj,Class ObjClass,
-				     Vector objectsToInspect,boolean recursive)
+    
+    
+    
+    
+    
+    
+    
+    
+    private void inspectFieldClasses(Object obj,Class ObjClass, Vector objectsToInspect,boolean recursive)
     {
 	
 	if(objectsToInspect.size() > 0 )
@@ -63,6 +70,15 @@ public class ObjectInspector
 	    }
     }
     //-----------------------------------------------------------
+    
+    
+    
+    
+    
+    
+    
+    
+    
     private void inspectFields(Object obj,Class ObjClass,Vector objectsToInspect)
   
     {
