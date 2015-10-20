@@ -8,6 +8,9 @@
 
 
 import java.util.*;
+
+import javax.swing.tree.ExpandVetoException;
+
 import java.lang.reflect.*;
 
 public class Inspector {
@@ -53,6 +56,8 @@ public class Inspector {
 		
 		inspectMethods(objectClass);
 		
+		inspectConstructors(objectClass);
+		
 		inspectFields(obj, objectClass, objectsToInspect);
 		
 		if (recursive && objectsToInspect.size() > 0)
@@ -62,7 +67,7 @@ public class Inspector {
 	//inspects fields 
 	public void inspectFields(Object obj, Class ObjectClass, Vector objectsToInspect){
 
-		System.out.println("Declaring class: " + ObjectClass.getDeclaringClass());
+		System.out.println("\nDeclaring class: " + ObjectClass.getDeclaringClass());
 
 		
 			//if there is at least one field to inspect
@@ -110,7 +115,7 @@ public class Inspector {
 	
 	public void inspectMethods(Class objectClass){
 		
-		System.out.println("---- Inspecting Declared Methods ----");
+		System.out.println("\n---- Inspecting Declared Methods ----");
 		
 		Method[] methods = objectClass.getDeclaredMethods();
 		
@@ -127,31 +132,60 @@ public class Inspector {
 			System.out.println("Exception types: ");
 			
 			Type[] exceptions = method.getExceptionTypes();
-			for (Type ex : exceptions){
-				System.out.println(ex.toString());
+			if (exceptions.length == 0)
+				System.out.println("None");
+			for (int i = 0; i < exceptions.length; i++){
+				System.out.println("    Exception " + i + ": " + exceptions[i].toString());
 			}
 			
 			//parameter types
 			System.out.println("Parameter types: ");
 			
 			Type[] parameters = method.getParameterTypes();
-			for (Type par : parameters){
-				System.out.println(par.toString());
+			if (parameters.length == 0)
+				System.out.println("None");
+			for (int i = 0; i < parameters.length; i++){
+				System.out.println("    Parameters " + i + ": " + parameters[i].toString());
 			}
 			
 			//return types
 			System.out.println("Return type: " + method.getReturnType().toString());
 			
 			//modifiers
+			System.out.println("Modifiers: " + Modifier.toString((method.getModifiers())));
+			
+			System.out.println("");
 		}
 	}
 	
 	//TODO
-	public void inspectConstructors(Class ObjectClass){
+	public void inspectConstructors(Class objectClass){
 	
 		System.out.println("---- Inspecting Declared Constructors ----");
-		System.out.println("TODO!!!!");
 
+		Constructor[] constructors = objectClass.getConstructors();
+		if (constructors.length == 0)
+			System.out.println("No constructors declared");
+		
+		for (Constructor con : constructors){
+			
+			//constructor
+			System.out.println("Constructor: " + con.toString());
+			
+			//parameter types
+			System.out.println("Parameter types: ");
+
+			Type[] parameters = con.getParameterTypes();
+			if (parameters.length == 0)
+				System.out.println("None");
+			for (int i = 0; i < parameters.length; i++){
+				System.out.println("    Parameters " + i + ": " + parameters[i].toString());
+			}
+			
+			//modifiers
+			System.out.println("Modifiers: " + Modifier.toString((con.getModifiers())));
+
+		}
 		
 		//getDeclaredConstructors
 	}
@@ -166,12 +200,13 @@ public class Inspector {
 	}
 	
 	public String parseFieldModifiers(Field field){ 
-		
+
 		return Modifier.toString(field.getModifiers());
 	}
 	
 	//TODO
 	public void inspectFieldRecursive(Object obj, Class ObjectClass, Vector objectsToInspect){
+		
 		if (objectsToInspect.size() > 0)
 		    System.out.println("---- Inspecting Field Objects ----");
 
