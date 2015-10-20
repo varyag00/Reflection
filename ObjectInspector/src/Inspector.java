@@ -9,6 +9,7 @@
 
 import java.util.*;
 
+import javax.jws.Oneway;
 import javax.swing.tree.ExpandVetoException;
 
 import java.lang.reflect.*;
@@ -40,7 +41,7 @@ public class Inspector {
 		//TODO:
 		/* 1. Inspect 
 		 * 		declaring class
-		 * 		name of immediate superclass
+		 * 		name of immediate superclass -- TODO
 		 * 		name of the interface the class implements
 		 * 		methods the class declares, with
 		 * 			exceptions thrown
@@ -53,6 +54,8 @@ public class Inspector {
 		 * 		
 		 */
 		//inspect all of the above before inspecting fields
+		
+		inpectInterfaces(objectClass);
 		
 		inspectMethods(objectClass);
 		
@@ -67,9 +70,8 @@ public class Inspector {
 	//inspects fields 
 	public void inspectFields(Object obj, Class ObjectClass, Vector objectsToInspect){
 
-		System.out.println("\nDeclaring class: " + ObjectClass.getDeclaringClass());
+		System.out.println("---- Inspecting Declared Fields ---");
 
-		
 			//if there is at least one field to inspect
 		if (ObjectClass.getDeclaredFields().length >= 1){
 			
@@ -79,10 +81,14 @@ public class Inspector {
 			field.setAccessible(true);
 			
 				//if an object's field is not primitive and recursive is true, then that field is an object that must be inspected
-			if (!field.getType().isPrimitive() && recursive){
+			if (!field.getType().isPrimitive() && recursive)
 				objectsToInspect.addElement(field);
-			}
+			
 				
+			System.out.println("Field: " + field.toString());
+			
+			System.out.println("Declaring class: " + obj); 		//TODO verify this is correct
+			
 				//attempt to print the field's name
 			try{
 					//Name
@@ -90,7 +96,7 @@ public class Inspector {
 					//Type
 				System.out.println("Type: " + field.getType().toString());
 					//Modifiers
-				System.out.println("Modifiers: " + parseFieldModifiers(field));
+				System.out.println("Modifiers: " + Modifier.toString(field.getModifiers()));
 					//Current value TODO: make it work for recursive
 					//For primitive fields, print current value
 				if (field.getType().isPrimitive())
@@ -145,7 +151,7 @@ public class Inspector {
 			if (parameters.length == 0)
 				System.out.println("None");
 			for (int i = 0; i < parameters.length; i++){
-				System.out.println("    Parameters " + i + ": " + parameters[i].toString());
+				System.out.println("    Parameter " + i + ": " + parameters[i].toString());
 			}
 			
 			//return types
@@ -185,24 +191,24 @@ public class Inspector {
 			//modifiers
 			System.out.println("Modifiers: " + Modifier.toString((con.getModifiers())));
 
+			System.out.println("");
 		}
 		
-		//getDeclaredConstructors
 	}
 	
 	public void inpectInterfaces(Class objectClass){
 		//getInterface
 		
 		System.out.println("---- Inspecting Implemented Interfaces ----");
-		System.out.println("TODO!!!!");
-
 		
+		Class[] interfaces = objectClass.getInterfaces();
+		if (interfaces.length == 0)
+			System.out.println("No interfaces implemented");
+		for (Class inter : interfaces){
+			System.out.println("Interface: " + inter.toString());
+		}
 	}
 	
-	public String parseFieldModifiers(Field field){ 
-
-		return Modifier.toString(field.getModifiers());
-	}
 	
 	//TODO
 	public void inspectFieldRecursive(Object obj, Class ObjectClass, Vector objectsToInspect){
