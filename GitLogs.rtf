@@ -1,0 +1,117 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf110
+{\fonttbl\f0\fnil\fcharset0 Monaco;\f1\fnil\fcharset0 AndaleMono;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 /* Name:		J. \ul Daniel\ulnone  \ul Gonzalez\ulnone \
+ * UCID:		10058656\
+ * Class:		CPSC 501\
+ * Ass:			2\
+ * \
+ * Sources:		I used \ul Jordan\ulnone  Kidney's ObjectInspector.java as a basis for the field introspection section of this code. I did not directly use any of his code.\
+ */\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f1\fs24 \cf2 \CocoaLigature0 commit 4929519a588c76b0320b42b50065329ecb554fa3\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Wed Oct 21 11:35:51 2015 -0600\
+\
+    Added tests for inspectMethods()\
+\
+commit d7af01fb138238885a519a76da1e9b8971625f49\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Wed Oct 21 11:33:01 2015 -0600\
+\
+    Added tests for inspectConstructors() and inspectInterfaces()\
+\
+commit a62f427bef5c6f2a02dd3e48c05dbbcda2066a81\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Wed Oct 21 11:17:17 2015 -0600\
+\
+    Added tests for PrintFieldInfo() and fixed a bug involving empty arrays in inspectArray()\
+\
+commit 1f25209d2057108e9da631662dca073d694f73e7\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Wed Oct 21 10:38:32 2015 -0600\
+\
+    Added test for inspectArray()\
+\
+commit da210debca12594bd4106d2de275acaf1ffd0850\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Tue Oct 20 20:41:12 2015 -0600\
+\
+    White space cleanup/commenting\
+\
+commit 3c0100e6dde4b19cf93ae698cec9e6d4ff4d0f20\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Tue Oct 20 20:38:19 2015 -0600\
+\
+    Refactor: Extract method. Extracted printFieldInfo() method to significantly reduce the length of the inspectFields() method.\
+\
+commit 9341b45b9fa4663b2aef1a5b79fec3321178dbbb\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Tue Oct 20 20:23:01 2015 -0600\
+\
+    Refactor: Extract method. Extracted inspectArray() method in order to improve code readability\
+\
+commit ba1cf6291a055ac84eeb99305573ffd583b84acb\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Tue Oct 20 20:00:00 2015 -0600\
+\
+    Inspector can now inspect arrays of any type\
+commit dc9646f52e4441cf96b67949189c361217e8b463\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Tue Oct 20 18:16:15 2015 -0600\
+\
+    Refactor: Introduce Null Object. Removed checked for null values, replace with null objects\
+\
+commit 3b26d8e314e17159e77b15ba4725bbb84c2c45c5\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Mon Oct 19 20:22:22 2015 -0600\
+\
+    Now able to inspect implemented interfaces\
+\
+commit 1278b9c1565ae7533fd04a7490770bd578f5bbc4\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Mon Oct 19 20:15:40 2015 -0600\
+\
+    Refactor: Remove Method for parseFieldModifiers() as it was no longer used\
+\
+commit 229ad8c1030e8cfd170781016706f86b26d3c55d\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Mon Oct 19 19:58:37 2015 -0600\
+\
+    Now able to print declared Methods and Constructors\
+\
+commit 79de20b83eb893054378312347e34cba3fc96dc3\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Mon Oct 19 19:19:41 2015 -0600\
+\
+    Now able to print fields recursively\
+\
+commit fb3cca2bd1824c73b10e03604d9efda15d9d4773\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Mon Oct 19 18:01:41 2015 -0600\
+\
+    Refactor: Extract Method for printing field modifiers to reduce code clutter\
+\
+commit b01d0c42f5b3e910dd44fdacd8252ee40ede0e67\
+Author: Dan Gonzalez <d.gonzalez0902@gmail.com>\
+Date:   Mon Oct 19 18:00:32 2015 -0600\
+\
+    Inspector now inspects fields (not recursively)\
+\
+commit 2dd54d08f9ebd09fafa6b877cd1191b0e9ed311c\
+Author: varyag00 <d.gonzalez0902@gmail.com>\
+Date:   Mon Oct 19 09:28:03 2015 -0600\
+\
+    Created base Inspector class with skeleton code from provided source code\
+\
+commit ba979f94670bf9727f852bf41db659dd7e4dde15\
+Author: varyag00 <d.gonzalez0902@gmail.com>\
+Date:   Mon Oct 19 08:26:16 2015 -0600\
+\
+    Initial commit: added provided driver code to the repo}
