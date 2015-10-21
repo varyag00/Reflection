@@ -1,5 +1,17 @@
 public final class ClassA implements java.io.Serializable, Runnable
 {
+	int[] literalArray = {1,2,3,4};
+	
+//	double[] doubleArray = {1.0, 2.0, 3.0, 3.14};
+//
+	int hello = 1;
+
+	int world = 2;
+	
+	Object[] objectArray = {new Object(), new String("hello"), new String("world")};
+	
+	double[] literalArray2 = {1.0, 2.0, 3.0, 3.14};
+	
     public ClassA() { val=3; }
 
     public ClassA(int i) 
