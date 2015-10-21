@@ -69,6 +69,20 @@ public class Inspector {
 			inspectFieldRecursive(obj, objectClass, objectsToInspect);
 	}
 		
+	public void inspectArray(Field field, Object obj){
+		try{ 
+			Object array = field.get(obj);
+		
+			for (int i = 0; i < Array.getLength(array); i ++){
+				System.out.println(field.getName() + "[" + i + "] = " + Array.get(array, i));
+			}
+		}
+			//reached end of array
+		catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+	
 	//inspects fields 
 	public void inspectFields(Object obj, Class ObjectClass, Vector objectsToInspect){
 		
@@ -90,23 +104,7 @@ public class Inspector {
 					
 					//if field is an array, inspect each element of the array
 				if (field.getType().isArray()){
-					
-					//inpectArray(field);
-
-					try{ 
-						Object array = field.get(obj);
-					
-						for (int i = 0; i < Array.getLength(array); i ++){
-							System.out.println(field.getName() + "[" + i + "] = " +  Array.get(array, i));
-							
-						}
-						
-					}
-						//reached end of array
-					catch (Exception e){
-						e.printStackTrace();
-
-					}
+					inspectArray(field, obj);
 				}
 				//field is not an array
 				else{
@@ -147,7 +145,6 @@ public class Inspector {
 			inspectFields(obj, ObjectClass.getSuperclass(), objectsToInspect);
 		}
 	}
-	
 	
 	//TODO check if method works correctly
 		public void inspectFieldRecursive(Object obj, Class ObjectClass, Vector objectsToInspect){
