@@ -55,9 +55,7 @@ public class Inspector {
 		 */
 		//inspect all of the above before inspecting fields
 		
-		//TODO: be able to deal with arrays
-		
-		System.out.println("Immediate superclass: " + objectClass.getSuperclass().toString() + "\n"); //TODO: verify this is correct
+		System.out.println("Immediate superclass: " + objectClass.getSuperclass().toString() + "\n");
 		
 		inpectInterfaces(objectClass);
 		inspectMethods(objectClass);
@@ -83,6 +81,28 @@ public class Inspector {
 		}
 	}
 	
+	public void printFieldInfo(Field field, Object obj){
+		
+		try{
+				//Name
+			System.out.println("Field Name: " + field.getName());
+				//Type
+			System.out.println("Type: " + field.getType().toString());
+				//Modifiers
+			System.out.println("Modifiers: " + Modifier.toString(field.getModifiers()));
+			
+				//For primitive fields, print current value
+			if (field.getType().isPrimitive())
+				System.out.println("Current value: " + field.get(obj));
+				//for object fields, print pointer value when recursion is off
+			else if (!field.getType().isPrimitive() && !recursive)
+				System.out.println("Current value (pointer): " + field.get(obj));
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
 	//inspects fields 
 	public void inspectFields(Object obj, Class ObjectClass, Vector objectsToInspect){
 		
@@ -99,8 +119,13 @@ public class Inspector {
 				//Field field = ObjectClass.getDeclaredFields()[0];
 				field.setAccessible(true);
 									
-				System.out.println("Field: " + field.toString());
-				System.out.println("Declaring class: " + ObjectClass.getName()); 	
+				try{
+					System.out.println("Field Declaration: " + field.toString() + " = " + field.get(obj));
+					System.out.println("Declaring class: " + ObjectClass.getName()); 	
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
 					
 					//if field is an array, inspect each element of the array
 				if (field.getType().isArray()){
@@ -109,34 +134,15 @@ public class Inspector {
 				//field is not an array
 				else{
 					
-					try{
-							//Name
-						System.out.println("Field: " + field.getName() + " = " + field.get(obj));
-							//Type
-						System.out.println("Type: " + field.getType().toString());
-							//Modifiers
-						System.out.println("Modifiers: " + Modifier.toString(field.getModifiers()));
-						
-							//For primitive fields, print current value
-						if (field.getType().isPrimitive())
-							System.out.println("Current value: " + field.get(obj));
-							//for object fields, print pointer value when recursion is off
-						else if (!field.getType().isPrimitive() && !recursive)
-							System.out.println("Current value (pointer): " + field.get(obj));
-						
-						System.out.println("");
-					}
-					catch(Exception e){
-						e.printStackTrace();
-					}
+					printFieldInfo(field, obj);
 					
-						//if an object's field is not primitive and recursive is true, then that field is an object that must be inspected
+					//if an object's field is not primitive and recursive is true, then that field is an object that must be inspected
 					if (!field.getType().isPrimitive() && recursive)
 						objectsToInspect.addElement(field);
 				}
+				
 				System.out.println("");
 			}
-			
 		}
 		
 		//if the object is a child of another class, inspect that superclass' value
@@ -146,30 +152,29 @@ public class Inspector {
 		}
 	}
 	
-	//TODO check if method works correctly
-		public void inspectFieldRecursive(Object obj, Class ObjectClass, Vector objectsToInspect){
+	public void inspectFieldRecursive(Object obj, Class ObjectClass, Vector objectsToInspect){
+		
+		if (objectsToInspect.size() > 0)
+		    System.out.println("---- Inspecting Field Objects ----");
+
+		Enumeration elements = objectsToInspect.elements();
+
+		//loop until every element has been inspected
+		while(elements.hasMoreElements()){
 			
-			if (objectsToInspect.size() > 0)
-			    System.out.println("---- Inspecting Field Objects ----");
-
-			Enumeration elements = objectsToInspect.elements();
-
-			//loop until every element has been inspected
-			while(elements.hasMoreElements()){
-				
-				Field field = (Field) elements.nextElement();
-				field.setAccessible(true);
-				
-				try{
-					System.out.println("******************");
-					inspect(field.get(obj), recursive);
-					System.out.println("******************");		
-				}
-				catch(Exception e){
-					e.printStackTrace();
-				}
+			Field field = (Field) elements.nextElement();
+			field.setAccessible(true);
+			
+			try{
+				System.out.println("******************");
+				inspect(field.get(obj), recursive);
+				System.out.println("******************");		
+			}
+			catch(Exception e){
+				e.printStackTrace();
 			}
 		}
+	}
 	
 	public void inspectMethods(Class objectClass){
 		
@@ -218,7 +223,6 @@ public class Inspector {
 		}
 	}
 	
-	//TODO
 	public void inspectConstructors(Class objectClass){
 	
 		System.out.println("---- Inspecting Declared Constructors ----");

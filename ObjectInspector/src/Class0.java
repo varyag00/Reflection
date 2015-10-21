@@ -1,5 +1,5 @@
 
-public class Class0 {
+public class Class0 extends Object{
 
 	int[] iArray = {1,2,3};
 	
