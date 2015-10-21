@@ -36,26 +36,11 @@ public class Inspector {
 		Vector objectsToInspect = new Vector();
 		Class objectClass = obj.getClass();
 		
-		System.out.println("recursive = " + recursive + "\n\nObject argument: " + obj);
+		System.out.println("\nrecursive = " + recursive + "\nObject argument: " + obj);
 
-		//TODO:
-		/* 1. Inspect 
-		 * 		declaring class
-		 * 		name of immediate superclass -- TODO
-		 * 		name of the interface the class implements
-		 * 		methods the class declares, with
-		 * 			exceptions thrown
-		 * 			parameter types
-		 * 			return types
-		 * 			modifiers
-		 * 		constructors, with
-		 * 			parameter types
-		 * 			modifiers
-		 * 		
-		 */
-		//inspect all of the above before inspecting fields
+		//TODO: write tests
 		
-		System.out.println("Immediate superclass: " + objectClass.getSuperclass().toString() + "\n");
+		System.out.println("\nImmediate superclass: " + objectClass.getSuperclass().toString() + "\n");
 		
 		inpectInterfaces(objectClass);
 		inspectMethods(objectClass);
@@ -103,7 +88,6 @@ public class Inspector {
 		}
 	}
 	
-	//inspects fields 
 	public void inspectFields(Object obj, Class ObjectClass, Vector objectsToInspect){
 		
 			//if there is at least one field to inspect
