@@ -69,7 +69,8 @@ public class InspectorTest {
 	
 	@Test
 	public void testInspectMethods(){
-		
+		ins.inspectMethods(testClass);
+	    assertEquals("\n---- Inspecting Declared Methods ----\nMethod: public void TestClass.hello(java.lang.String) throws java.lang.Exception\nName: hello\nException types: \n    Exception 0: class java.lang.Exception\nParameter types: \n    Parameter 0: class java.lang.String\nReturn type: void\nModifiers: public\n\n", outContent.toString());
 	}
 	
 	@Test
