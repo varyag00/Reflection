@@ -9,7 +9,6 @@ import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.util.Scanner;
 
-
 //https://stackoverflow.com/questions/1119385/junit-test-for-system-out-println for testing console output
 
 public class InspectorTest {
@@ -74,13 +73,23 @@ public class InspectorTest {
 	}
 	
 	@Test
-	public void testInspectConstructor(){
+	public void testInspectConstructors(){
 		
+		ins.inspectConstructors(testClass);
+	    assertEquals("---- Inspecting Declared Constructors ----\nConstructor: public TestClass()\nParameter types: \nNone\nModifiers: public\n\nConstructor: public TestClass(int)\nParameter types: \n    Parameters 0: int\nModifiers: public\n\n", outContent.toString());
 	}
 	
 	@Test 
 	public void testPrintFieldInfo(){
+		testField = testFields[3];
+		ins.printFieldInfo(testField, testObject);
+	    assertEquals("Field Name: testHello\nType: class java.lang.String\nModifiers: \nCurrent value (pointer): hello world\n", outContent.toString());
+	    outContent.reset();
 		
+		testField = testFields[4];
+		ins.printFieldInfo(testField, testObject);
+	    assertEquals("Field Name: testInt\nType: int\nModifiers: \nCurrent value: 42\n", outContent.toString());
+	    outContent.reset();
 	}
 
 	@Test

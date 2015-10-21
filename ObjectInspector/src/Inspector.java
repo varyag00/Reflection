@@ -215,7 +215,7 @@ public class Inspector {
 	
 		System.out.println("---- Inspecting Declared Constructors ----");
 
-		Constructor[] constructors = objectClass.getConstructors();
+		Constructor[] constructors = objectClass.getDeclaredConstructors();
 		if (constructors.length == 0)
 			System.out.println("No constructors declared");
 		
