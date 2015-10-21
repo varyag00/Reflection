@@ -68,74 +68,83 @@ public class Inspector {
 		if (recursive && objectsToInspect.size() > 0)
 			inspectFieldRecursive(obj, objectClass, objectsToInspect);
 	}
-	
+		
 	//inspects fields 
 	public void inspectFields(Object obj, Class ObjectClass, Vector objectsToInspect){
-
-		System.out.println("---- Inspecting Declared Fields ---");
-		if (ObjectClass.getDeclaredFields().length == 0)
-			System.out.println("No fields to inspect");
 		
 			//if there is at least one field to inspect
-		else if (ObjectClass.getDeclaredFields().length >= 1){
-			
-			//System.out.println("Inspecting " + ObjectClass.getName());
-			
+		if (ObjectClass.getDeclaredFields().length >= 1){
+						
+			System.out.println("---- Inspecting Declared Fields ---");
+
 			Field[] declaredFields = ObjectClass.getDeclaredFields();
 			
+				//inspect every field in the class 
 			for (Field field : declaredFields){
 
 				//Field field = ObjectClass.getDeclaredFields()[0];
 				field.setAccessible(true);
-				
-					//if an object's field is not primitive and recursive is true, then that field is an object that must be inspected
-				if (!field.getType().isPrimitive() && recursive)
-					objectsToInspect.addElement(field);
-				
-					
+									
 				System.out.println("Field: " + field.toString());
-				
-				System.out.println("Declaring class: " + obj); 		//TODO verify this is correct
-				
-					//attempt to print the field's data
-				try{
+				System.out.println("Declaring class: " + ObjectClass.getName()); 	
 					
 					//if field is an array, inspect each element of the array
-	//				if (field.getType().isArray()){
-	//					int arrayLength = field.
-	//					
-	//					for (int i = 0; i < field. ; i++){
-	//						
-	//					}
-	//				}
+				if (field.getType().isArray()){
 					
-						//Name
-					System.out.println("Field: " + field.getName() + " = " + field.get(obj));
-						//Type
-					System.out.println("Type: " + field.getType().toString());
-						//Modifiers
-					System.out.println("Modifiers: " + Modifier.toString(field.getModifiers()));
+					//inpectArray(field);
+
+					try{ 
+						Object array = field.get(obj);
 					
-															//Current value TODO: make it work for recursive
-						//For primitive fields, print current value
-					if (field.getType().isPrimitive())
-						System.out.println("Current value: " + field.get(obj));
-						//for object fields, print pointer value when recursion is off
-					else if (!field.getType().isPrimitive() && !recursive)
-						System.out.println("Current value (pointer): " + field.get(obj));
+						for (int i = 0; i < Array.getLength(array); i ++){
+							System.out.println(field.getName() + "[" + i + "] = " +  Array.get(array, i));
+							
+						}
+						
+					}
+						//reached end of array
+					catch (Exception e){
+						e.printStackTrace();
+
+					}
+				}
+				//field is not an array
+				else{
 					
-					System.out.println("");
+					try{
+							//Name
+						System.out.println("Field: " + field.getName() + " = " + field.get(obj));
+							//Type
+						System.out.println("Type: " + field.getType().toString());
+							//Modifiers
+						System.out.println("Modifiers: " + Modifier.toString(field.getModifiers()));
+						
+							//For primitive fields, print current value
+						if (field.getType().isPrimitive())
+							System.out.println("Current value: " + field.get(obj));
+							//for object fields, print pointer value when recursion is off
+						else if (!field.getType().isPrimitive() && !recursive)
+							System.out.println("Current value (pointer): " + field.get(obj));
+						
+						System.out.println("");
+					}
+					catch(Exception e){
+						e.printStackTrace();
+					}
+					
+						//if an object's field is not primitive and recursive is true, then that field is an object that must be inspected
+					if (!field.getType().isPrimitive() && recursive)
+						objectsToInspect.addElement(field);
 				}
-				catch(Exception e){
-					e.printStackTrace();
-				}
-				
-					//if the object is a child of another class, inspect that superclass' value
-				if (ObjectClass.getSuperclass() != null){
-					System.out.println("Inspecting superclass: " + ObjectClass.getSuperclass());
-					inspectFields(obj, ObjectClass.getSuperclass(), objectsToInspect);
-				}
+				System.out.println("");
 			}
+			
+		}
+		
+		//if the object is a child of another class, inspect that superclass' value
+		if (ObjectClass.getSuperclass() != null){
+			System.out.println("Inspecting superclass: " + ObjectClass.getSuperclass());
+			inspectFields(obj, ObjectClass.getSuperclass(), objectsToInspect);
 		}
 	}
 	
