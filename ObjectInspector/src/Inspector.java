@@ -54,15 +54,19 @@ public class Inspector {
 		
 	public void inspectArray(Field field, Object obj){
 		try{ 
+			
 			Object array = field.get(obj);
 		
 			for (int i = 0; i < Array.getLength(array); i ++){
 				System.out.println(field.getName() + "[" + i + "] = " + Array.get(array, i));
+				
 			}
 		}
 			//reached end of array
 		catch (Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
+		
+			System.out.println("Array not initialized");
 		}
 	}
 	
